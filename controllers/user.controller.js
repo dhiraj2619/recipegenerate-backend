@@ -44,7 +44,7 @@ const UserController = {
             if (isPasswordmatch) {
                 const token = jwt.sign({ userId: user.id }, secret_key);
                 res.header({ "x-auth-token": token });
-                res.status(200).json({ message: "user login successfull", token, user });
+                res.status(200).json({ message: "user login successfull", token, userId:user.id });
             }
             else {
                 res.status(400).json({ message: "invalid password" });
