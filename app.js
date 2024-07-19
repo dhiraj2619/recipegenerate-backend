@@ -7,7 +7,7 @@ const session = require('express-session');
 const passport = require('passport');
 const app = express();
 require('./utlis/passport.config');
-
+const cors = require('cors');
 const port = webport;
 
 const connectTodb=async()=>{
@@ -26,6 +26,7 @@ app.use(session({
 }))
 
 
+app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
