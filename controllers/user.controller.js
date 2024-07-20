@@ -11,7 +11,7 @@ const UserController = {
             const existingUser = await User.findOne({ email });
 
             if (existingUser) {
-                res.status(409).json({ message: "user already exists" });
+               return res.status(409).json({ message: "user already exists" });
             }
 
             const saltRounds = 10;
@@ -22,7 +22,7 @@ const UserController = {
             });
 
             const savedUser = await user.save();
-            res.status(201).json({ message: "user registration successfull", user: savedUser });
+            return res.status(201).json({ message: "user registration successfull", user: savedUser });
         } catch (error) {
             console.error("error registering user", error);
             res.status(500).json({ message: "internal server error" })
