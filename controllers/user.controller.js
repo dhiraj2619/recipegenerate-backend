@@ -35,7 +35,7 @@ const UserController = {
             const user = await User.findOne({ email });
 
             if (!user) {
-                res.status(400).json({ message: "user not found with this email id" });
+                return res.status(400).json({ message: "user not found with this email id" });
             }
             const storedpassword = user.password;
 
@@ -44,14 +44,14 @@ const UserController = {
             if (isPasswordmatch) {
                 const token = jwt.sign({ userId: user.id }, secret_key);
                 res.header({ "x-auth-token": token });
-                res.status(200).json({ message: "user login successfull", token, userId:user.id });
+                return res.status(200).json({ message: "user login successful", token, userId: user.id });
             }
             else {
-                res.status(400).json({ message: "invalid password" });
+                return res.status(400).json({ message: "invalid password" });
             }
         } catch (error) {
             console.error("Error signing In");
-            res.status(500).json({ message: "Internal Server Error" });
+            return res.status(500).json({ message: "Internal Server Error" });
         }
     },
     logout:async(req,res)=>{
