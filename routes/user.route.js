@@ -13,7 +13,7 @@ userRouter.get('/google/callback',
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
         const token = req.user.generateAuthToken();
-        res.header('x-auth-token', token).redirect('/');
+        res.header('x-auth-token', token).redirect('https://recipegeneratorweb.onrender.com/auth/google/callback?token='+token);
     });
 
 userRouter.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
