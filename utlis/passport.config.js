@@ -7,7 +7,9 @@ const facebookStrategy = require('passport-facebook').Strategy;
 passport.use(new googleStrategy({
     clientID: google_client_id,
     clientSecret: google_client_secret,
-    callbackURL: '/google/auth/callback'
+    callbackURL: process.env.NODE_ENV === 'production' ? 
+        'https://recipegenerate-backend.onrender.com/api/users/google/callback' : 
+        'http://localhost:5000/api/users/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         let user = await User.findOne({ googleId: profile.id });
