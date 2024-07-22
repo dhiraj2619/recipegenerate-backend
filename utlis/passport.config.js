@@ -15,11 +15,13 @@ passport.use(new googleStrategy({
         let user = await User.findOne({ googleId: profile.id });
 
         if (!user) {
+            const placeholderPassword = (Math.random() + 1).toString(36).substring(2);
             user = new User({
                 googleId: profile.id,
                 firstname: profile.name.givenName,
-                lastname: profile.name, familyName,
-                email: profile.emails[0].value
+                lastname: profile.name.familyName,
+                email: profile.emails[0].value,
+                password: placeholderPassword
             });
 
             await user.save();
@@ -40,11 +42,13 @@ passport.use(new facebookStrategy({
         let user = await User.findOne({ facebookId: profile.id });
 
         if (!user) {
+            const placeholderPassword = (Math.random() + 1).toString(36).substring(2);
             user = new User({
                 facebookId: profile.id,
                 firstname: profile.name.givenName,
                 lastname: profile.name.familyName,
-                email: profile.emails[0].value
+                email: profile.emails[0].value,
+                password:placeholderPassword
             });
             await user.save();
         }

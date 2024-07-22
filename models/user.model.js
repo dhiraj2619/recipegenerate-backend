@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 const jwt = require('jsonwebtoken');
 const { secret_key } = require('../utlis/config.');
+const bcrypt = require('bcrypt');
 
 const userSchema = new schema({
     googleId:{
@@ -32,6 +33,14 @@ const userSchema = new schema({
     },
     
 }) 
+
+userSchema.pre('save', async function (next) {
+    if (this.password && this.isModified('password')) {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+    }
+    next();
+});
 
 userSchema.methods.generateAuthToken=()=>{
     const token = jwt.sign({userId:this._id},secret_key);
