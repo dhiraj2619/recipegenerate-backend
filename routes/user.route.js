@@ -21,7 +21,7 @@ userRouter.get('/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/' }),
     (req, res) => {
         const token = req.user.generateAuthToken();
-        res.header('x-auth-token', token).redirect('/');
+        res.header('x-auth-token', token).redirect(`http://localhost:3000/auth/facebook/callback?facebookToken=${token}`);
     });
 
 module.exports = { userRouter }

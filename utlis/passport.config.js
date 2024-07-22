@@ -7,8 +7,8 @@ const facebookStrategy = require('passport-facebook').Strategy;
 passport.use(new googleStrategy({
     clientID: google_client_id,
     clientSecret: google_client_secret,
-    callbackURL: process.env.NODE_ENV === 'production' ? 
-        'https://recipegenerate-backend.onrender.com/api/users/google/callback' : 
+    callbackURL: process.env.NODE_ENV === 'production' ?
+        'https://recipegenerate-backend.onrender.com/api/users/google/callback' :
         'http://localhost:5000/api/users/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
     try {
@@ -35,7 +35,9 @@ passport.use(new googleStrategy({
 passport.use(new facebookStrategy({
     clientID: facebook_app_id,
     clientSecret: facebook_client_secret,
-    callbackURL: '/auth/facebook/callback',
+    callbackURL: process.env.NODE_ENV === 'production' ?
+        'https://recipegenerate-backend.onrender.com/api/users/facebook/callback' :
+         'http://localhost:5000/api/users/facebook/callback',
     profileFields: ['id', 'emails', 'name']
 }, async (accessToken, refreshToken, profile, done) => {
     try {
@@ -48,7 +50,7 @@ passport.use(new facebookStrategy({
                 firstname: profile.name.givenName,
                 lastname: profile.name.familyName,
                 email: profile.emails[0].value,
-                password:placeholderPassword
+                password: placeholderPassword
             });
             await user.save();
         }
