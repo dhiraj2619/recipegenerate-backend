@@ -6,7 +6,23 @@ const recipeSchema = new schema({
         type: String,
         required: true
     },
-    ingredients: [
+    vegies: [
+        {
+            name: {
+                type: String,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: false
+            },
+            isVeg: {
+                type: Boolean,
+                required: true
+            }
+        }
+    ],
+    mainingredients: [
         {
             name: {
                 type: String,
@@ -17,6 +33,18 @@ const recipeSchema = new schema({
                 required: true
             }
         }
+    ],
+    regularingredients: [
+        {
+            name: {
+                type:String,
+                required: false
+            },
+            quantity: {
+                type: String,
+                required: false
+            }
+        },
     ],
     optionalIngredients: [
         {
@@ -44,6 +72,6 @@ const recipeSchema = new schema({
     ],
 })
 
-const Recipe = mongoose.model('Recipe',recipeSchema);
+const Recipe = mongoose.model('Recipe', recipeSchema);
 
 module.exports = Recipe
