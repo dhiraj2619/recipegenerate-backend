@@ -37,7 +37,7 @@ const recipeSchema = new schema({
     regularingredients: [
         {
             name: {
-                type:String,
+                type: String,
                 required: false
             },
             quantity: {
@@ -70,6 +70,8 @@ const recipeSchema = new schema({
             }
         }
     ],
+}, {
+    timestamps: { createdAt: true, updatedAt: false }
 })
 
 const Recipe = mongoose.model('Recipe', recipeSchema);
