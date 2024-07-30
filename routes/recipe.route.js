@@ -7,5 +7,6 @@ recipeRouter.get('/allrecipes',recipeController.getAllRecipes);
 recipeRouter.get('/:id',recipeController.getRecipeById);
 recipeRouter.put('/update/:id',recipeController.updateRecipe); 
 recipeRouter.delete('/:id',recipeController.deleteRecipe);
+recipeRouter.post('/match',recipeController.getMatchedRecipes);
 
 module.exports = {recipeRouter}
