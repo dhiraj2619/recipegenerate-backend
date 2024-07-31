@@ -11,7 +11,7 @@ const UserController = {
             const existingUser = await User.findOne({ email });
 
             if (existingUser) {
-               return res.status(409).json({ message: "user already exists" });
+                return res.status(409).json({ message: "user already exists" });
             }
 
             const saltRounds = 10;
@@ -54,13 +54,29 @@ const UserController = {
             return res.status(500).json({ message: "Internal Server Error" });
         }
     },
-    logout:async(req,res)=>{
+    logout: async (req, res) => {
         try {
             res.header("x-auth-token", "");
             res.status(200).json({ message: "Logout successful" });
         } catch (error) {
             console.error("Error logging out:", error);
             res.status(500).json({ message: "Internal Server Error" });
+        }
+    },
+    getUserbyId: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const user = await User.findById(id);
+
+            if(user){
+                return res.status(200).json({ user});
+            }
+            else{
+                return res.status(400).json({message:"unable to get user data"});
+            }
+        } catch (error) {
+            console.error("Error getting user", error);
+            res.status(500).json({ message: "server error" })
         }
     }
 }
